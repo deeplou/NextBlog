@@ -1,0 +1,9 @@
+.root {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    background-color: #111;
+    color: #fff;
+    background-image: radial-gradient(circle at 0 0, hsla(195, 100%, 50%, 0.8) 10%, transparent 70%);
+    text-shadow: 0 calc(2rem/16) calc(3rem/16) hsla(0, 0%, 0%, 0.75);
+}

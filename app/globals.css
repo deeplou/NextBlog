@@ -1,0 +1,67 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button,
+label {
+    cursor: pointer;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+button,
+img {
+    user-select: none;
+}
+
+input,
+textarea {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: hsl(0, 0%, 10%);
+    color: #fff;
+    outline: none;
+    border: solid calc(2rem/16) transparent;
+    width: 100%;
+    box-shadow: 0 calc(1rem/16) calc(5rem/16) hsla(0, 0%, 0%, 0.75);
+    transition: background-color 0.2s;
+}
+
+input:focus-visible,
+textarea:focus-visible {
+    background-color: #000;
+    border-color: deepskyblue;
+    box-shadow: 0 0 0.6rem hsla(200, 100%, 50%, 0.8);
+}
+
+textarea {
+    min-height: 8rem;
+    max-height: 20rem;
+    max-width: 100%;
+    resize: vertical;
+}
+
+footer {
+    padding: 1rem;
+    text-align: center;
+    background-image: linear-gradient(transparent, hsla(0, 0%, 0%, 0.5));
+}
