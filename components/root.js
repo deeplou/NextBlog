@@ -33,8 +33,11 @@ function Root({ children }) {
             htmlElem.style.fontSize = resFS ? resFS + 'px' : '';
         }
 
-        resFunc();
-        window.onresize = resFunc;
+        function resSetup() {
+            resFunc();
+            window.onresize = resFunc;
+        }
+        resSetup();
 
         const rootElem = document.getElementById('root');
 
@@ -49,7 +52,7 @@ function Root({ children }) {
         allImgs.forEach(i => i.draggable = false);
 
         return () => {
-            window.removeEventListener('resize', resFs);
+            window.removeEventListener('resize', resFunc);
             window.removeEventListener('mousemove', handleMouseMove);
         };
     }, []);

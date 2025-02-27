@@ -91,16 +91,6 @@ export default function Posts({ initialPosts }) {
             <div className={styles.blogheader}>
                 <h1 className={styles.welcome}>Welcome to NextBlog</h1>
                 <p className={styles.nextproject}>Built using <img src='/next.svg' className={styles.nextlogo} alt="Next.js Logo" /></p>
-
-                <div className={styles.techstack}>
-                    <p>Responsive full-stack blog developed using:</p>
-                    <ul className={styles.techlist}>
-                        <li>Next.js 15</li>
-                        <li>React 19</li>
-                        <li>Powered by a PostgreSQL backend.</li>
-                        <li>Authentication is excluded for demo purposes.</li>
-                    </ul>
-                </div>
             </div>
 
             <form className={styles.blogform} onSubmit={handleSubmit}>
@@ -128,8 +118,8 @@ export default function Posts({ initialPosts }) {
 
             <span className={pcStyles}>Post created</span>
 
-            <div className={cookiesbox ? styles.cookiebox : cnx(styles.cookiebox, styles.hidepc)}>
-                This website uses cookies to ensure you get the best experience.
+            <div className={cookiesbox ? styles.cookiesbox : cnx(styles.cookiesbox, styles.hidepc)}>
+                We use cookies and similar technologies to deliver, maintain, improve our services and for security purposes.
                 <div className={styles.acceptbtns}>
                     <button className={cnx(styles.acceptbtn, styles.denybtn)} onClick={acceptCookies}>Deny</button>
                     <button className={styles.acceptbtn} onClick={acceptCookies}>Accept</button>

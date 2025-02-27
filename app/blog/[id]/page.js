@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import styles from './post.module.css';
 import ucfirst from "@/components/ucfirst";
+import Link from "next/link";
 
 export default async function Post({ params }) {
     const { id } = await params;
@@ -20,7 +21,10 @@ export default async function Post({ params }) {
 
         return (
             <div className={styles.posts}>
-                <h1>Post ID: {id}</h1>
+                <div className={styles.header}>
+                    <Link href={'/'} className={styles.backlink} title="Back to Blog"><img src="/arrow.png" className={styles.backbtn} /></Link>
+                    <h1>Post ID: {id}</h1>
+                </div>
 
                 <div className={styles.post}>
                     <div className={styles.postheader}>
