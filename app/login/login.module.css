@@ -15,7 +15,7 @@
     gap: 1rem;
     padding: 1rem;
     border-radius: 1rem;
-    box-shadow: 0 2px 5px hsla(0, 0%, 0%, 0.75);
+    box-shadow: 0 0.1rem 0.3rem hsla(0, 0%, 0%, 0.75);
     width: 100%;
     max-width: 30rem;
 }

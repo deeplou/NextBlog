@@ -67,12 +67,6 @@
     box-shadow: none;
 }
 
-@media (orientation: portrait) {
-    .formbtn {
-        width: 100%;
-    }
-}
-
 /* POSTS */
 
 .postscont {
@@ -122,26 +116,28 @@
 }
 
 .postcreated {
+    position: fixed;
+    bottom: 3rem;
+    margin: 0 2rem;
+    align-self: center;
     background-color: hsl(0, 0%, 20%);
     padding: 0.6rem 2rem;
     border-radius: 10rem;
-    position: fixed;
-    bottom: 3rem;
-    align-self: center;
     font-weight: 600;
     font-size: 1.25rem;
-    transition: bottom 0.5s;
     text-shadow: none;
-    box-shadow: 0 1px 5px hsla(0, 0%, 0%, 0.5);
+    box-shadow: 0 0.1rem 0.3rem hsla(0, 0%, 0%, 0.5);
+    transition: transform 0.5s, opacity 0.3s;
 }
 
 .cookiesbox {
     position: fixed;
     bottom: 3rem;
+    margin: 0 2rem;
     align-self: flex-end;
     background-color: hsla(0, 0%, 0%, 0.7);
-    box-shadow: 0 2px 5px hsla(0, 0%, 0%, 0.5);
-    backdrop-filter: blur(10px);
+    box-shadow: 0 0.1rem 0.3rem hsla(0, 0%, 0%, 0.5);
+    backdrop-filter: blur(0.6rem);
     max-width: 32rem;
     padding: 1rem;
     border-radius: 1rem;
@@ -149,7 +145,7 @@
     flex-direction: column;
     gap: 2rem;
     text-align: start;
-    transition: bottom 0.5s;
+    transition: transform 0.5s, opacity 0.3s;
 }
 
 .acceptbtns {
@@ -171,7 +167,7 @@
 .acceptbtn:hover {
     --bgcolor: hsl(120, 100%, 60%);
     background-color: var(--bgcolor);
-    box-shadow: 0 0 5px var(--bgcolor);
+    box-shadow: 0 0 0.3rem var(--bgcolor);
 }
 
 .denybtn:hover {
@@ -185,9 +181,21 @@
 }
 
 .hidepc {
-    bottom: -10rem;
+    transform: translateY(calc(100% + 3rem));
+    opacity: 0;
+    pointer-events: none;
 }
 
 .hide {
     display: none;
+}
+
+@media (orientation: portrait) {
+    .formbtn {
+        width: 100%;
+    }
+
+    .cookiesbox {
+        align-self: center;
+    }
 }

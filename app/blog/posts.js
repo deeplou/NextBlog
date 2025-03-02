@@ -8,18 +8,10 @@ import Link from 'next/link';
 export default function Posts({ initialPosts }) {
     const [posts, setPosts] = useState(initialPosts);
     const [showPC, setShowPC] = useState(false);
-    const [posted, setPosted] = useState(posts.length > 0);
-    const [cookiesbox, setCB] = useState(false);
+    const [posted, setPosted] = useState(initialPosts.length > 0);
+    const [cookiesBox, setCB] = useState(false);
     const pcTimeoutRef = useRef(null);
     const blogAPI = '/api/blog';
-
-    useEffect(() => {
-        if (!localStorage.getItem('cookies')) {
-            setTimeout(() => {
-                setCB(true);
-            }, 1000);
-        }
-    }, []);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -36,14 +28,10 @@ export default function Posts({ initialPosts }) {
 
             setPosts(prevPosts => [data, ...prevPosts]);
             setPosted(true);
-
             setShowPC(true);
-            if (pcTimeoutRef.current) {
-                clearTimeout(pcTimeoutRef.current);
-            }
-            pcTimeoutRef.current = setTimeout(() => {
-                setShowPC(false);
-            }, 2000);
+
+            if (pcTimeoutRef.current) clearTimeout(pcTimeoutRef.current);
+            pcTimeoutRef.current = setTimeout(() => setShowPC(false), 2000);
         } catch (error) {
             console.error(error);
         }
@@ -65,26 +53,41 @@ export default function Posts({ initialPosts }) {
             .catch(err => console.error(err));
     }
 
-    function acceptCookies() {
-        localStorage.setItem('cookies', true);
+    function acceptCookies(e) {
+        const btn = e.target;
+        const btnOption = btn.innerText === 'Accept';
+        const cb = document.getElementById('cb');
+
+        localStorage.setItem('cookies', btnOption);
         setCB(false);
+
+        setTimeout(() => {
+            cb.remove();
+        }, 500);
     }
 
-    const noPostsHTML = <div className={cnx(styles.post, styles.noposts)}>No posts yet.</div>;
-    const postsHTML = posts.map(({ id, name, title, body, created_at }) => (
-        <Link href={'/blog/' + id} className={styles.post} key={id}>
-            <div className={styles.postheader}>
-                <h2>{title}</h2>
-                <p>Posted by {ucfirst(name)}</p>
-                <p>{new Date(created_at).toLocaleDateString()} | {new Date(created_at).toLocaleTimeString()}</p>
-            </div>
-            <p className={styles.postbody}>{body}</p>
-        </Link>
-    ));
+    useEffect(() => {
+        if (!localStorage.getItem('cookies')) {
+            setTimeout(() => setCB(true), 500);
+        } else {
+            const cb = document.getElementById('cb');
+            cb.remove();
+        }
+    }, []);
 
-    const outputHTML = posts.length === 0 ? noPostsHTML : postsHTML;
+    const outputHTML = posts.length === 0 ? <div className={cnx(styles.post, styles.noposts)}>No posts yet.</div> :
+        posts.map(({ id, name, title, body, created_at }) => (
+            <Link href={'/blog/' + id} className={styles.post} key={id}>
+                <div className={styles.postheader}>
+                    <h2>{title}</h2>
+                    <p>Posted by {ucfirst(name)}</p>
+                    <p>{new Date(created_at).toLocaleDateString()} | {new Date(created_at).toLocaleTimeString()}</p>
+                </div>
+                <p className={styles.postbody}>{body}</p>
+            </Link>
+        ));
 
-    const pcStyles = showPC ? styles.postcreated : cnx(styles.hidepc, styles.postcreated);
+    const pcStyles = showPC ? styles.postcreated : cnx(styles.postcreated, styles.hidepc);
 
     return (
         <div className={styles.blog}>
@@ -118,7 +121,7 @@ export default function Posts({ initialPosts }) {
 
             <span className={pcStyles}>Post created</span>
 
-            <div className={cookiesbox ? styles.cookiesbox : cnx(styles.cookiesbox, styles.hidepc)}>
+            <div className={cookiesBox ? styles.cookiesbox : cnx(styles.cookiesbox, styles.hidepc)} id='cb'>
                 We use cookies and similar technologies to deliver, maintain, improve our services and for security purposes.
                 <div className={styles.acceptbtns}>
                     <button className={cnx(styles.acceptbtn, styles.denybtn)} onClick={acceptCookies}>Deny</button>
