@@ -38,19 +38,21 @@ export default function Posts({ initialPosts }) {
     }
 
     function truncateTable() {
-        const formData = new FormData();
-        formData.append('truncate', true);
+        if (confirm('Are you sure you want to delete all posts? (Irreversible)')) {
+            const formData = new FormData();
+            formData.append('truncate', true);
 
-        fetch(blogAPI, {
-            method: 'POST',
-            body: formData
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data.msg);
-                setPosts([]);
+            fetch(blogAPI, {
+                method: 'POST',
+                body: formData
             })
-            .catch(err => console.error(err));
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data.msg);
+                    setPosts([]);
+                })
+                .catch(err => console.error(err));
+        }
     }
 
     function acceptCookies(e) {
@@ -63,21 +65,24 @@ export default function Posts({ initialPosts }) {
 
     async function delPost(e, id) {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append('deletePost', true);
-        formData.append('postId', id);
 
-        const res = await fetch(blogAPI, {
-            method: 'POST',
-            body: formData
-        });
-        const data = await res.json();
+        if (confirm('Are you sure you want to delete this post?')) {
+            const formData = new FormData();
+            formData.append('deletePost', true);
+            formData.append('postId', id);
 
-        console.log(data);
+            const res = await fetch(blogAPI, {
+                method: 'POST',
+                body: formData
+            });
+            const data = await res.json();
 
-        const res2 = await fetch(blogAPI);
-        const data2 = await res2.json();
-        setPosts(data2);
+            console.log(data);
+
+            const res2 = await fetch(blogAPI);
+            const data2 = await res2.json();
+            setPosts(data2);
+        }
     }
 
     useEffect(() => {
@@ -136,7 +141,7 @@ export default function Posts({ initialPosts }) {
             <div className={cookiesBox ? styles.cookiesbox : cnx(styles.cookiesbox, styles.hidepc)}>
                 We use cookies and similar technologies to deliver, maintain, improve our services and for security purposes.
                 <div className={styles.acceptbtns}>
-                    <button className={cnx(styles.acceptbtn, styles.denybtn)} onClick={acceptCookies}>Deny</button>
+                    <button className={cnx(styles.acceptbtn, styles.denybtn)} onClick={acceptCookies}>Reject</button>
                     <button className={styles.acceptbtn} onClick={acceptCookies}>Accept</button>
                 </div>
             </div>
