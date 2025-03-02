@@ -86,9 +86,7 @@ export default function Posts({ initialPosts }) {
     }
 
     useEffect(() => {
-        if (!localStorage.getItem('cookies')) {
-            setTimeout(() => setCB(true), 500);
-        }
+        if (!localStorage.getItem('cookies')) setTimeout(() => setCB(true), 500);
     }, []);
 
     const outputHTML = posts.length === 0 ? <div className={cnx(styles.post, styles.noposts)}>No posts yet.</div> :
