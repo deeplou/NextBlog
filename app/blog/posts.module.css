@@ -92,6 +92,7 @@
     background-image: linear-gradient(#000, #222);
     box-shadow: 0 calc(2rem/16) calc(5rem/16) hsla(0, 0%, 0%, 0.5);
     text-shadow: none;
+    position: relative;
 }
 
 .post,
@@ -178,6 +179,14 @@
 .acceptbtn:active {
     scale: 0.98;
     box-shadow: none;
+}
+
+.delbtn {
+    width: 2rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 1.25rem;
 }
 
 .hidepc {

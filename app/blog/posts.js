@@ -56,22 +56,33 @@ export default function Posts({ initialPosts }) {
     function acceptCookies(e) {
         const btn = e.target;
         const btnOption = btn.innerText === 'Accept';
-        const cb = document.getElementById('cb');
 
         localStorage.setItem('cookies', btnOption);
         setCB(false);
+    }
 
-        setTimeout(() => {
-            cb.remove();
-        }, 500);
+    async function delPost(e, id) {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('deletePost', true);
+        formData.append('postId', id);
+
+        const res = await fetch(blogAPI, {
+            method: 'POST',
+            body: formData
+        });
+        const data = await res.json();
+
+        console.log(data);
+
+        const res2 = await fetch(blogAPI);
+        const data2 = await res2.json();
+        setPosts(data2);
     }
 
     useEffect(() => {
         if (!localStorage.getItem('cookies')) {
             setTimeout(() => setCB(true), 500);
-        } else {
-            const cb = document.getElementById('cb');
-            cb.remove();
         }
     }, []);
 
@@ -82,6 +93,7 @@ export default function Posts({ initialPosts }) {
                     <h2>{title}</h2>
                     <p>Posted by {ucfirst(name)}</p>
                     <p>{new Date(created_at).toLocaleDateString()} | {new Date(created_at).toLocaleTimeString()}</p>
+                    <img src="/delete.png" alt="Delete Post" className={styles.delbtn} title='Delete Post' onClick={e => delPost(e, id)} />
                 </div>
                 <p className={styles.postbody}>{body}</p>
             </Link>
@@ -121,7 +133,7 @@ export default function Posts({ initialPosts }) {
 
             <span className={pcStyles}>Post created</span>
 
-            <div className={cookiesBox ? styles.cookiesbox : cnx(styles.cookiesbox, styles.hidepc)} id='cb'>
+            <div className={cookiesBox ? styles.cookiesbox : cnx(styles.cookiesbox, styles.hidepc)}>
                 We use cookies and similar technologies to deliver, maintain, improve our services and for security purposes.
                 <div className={styles.acceptbtns}>
                     <button className={cnx(styles.acceptbtn, styles.denybtn)} onClick={acceptCookies}>Deny</button>

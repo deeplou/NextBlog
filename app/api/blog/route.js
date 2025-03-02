@@ -8,8 +8,13 @@ export async function POST(req) {
         const title = formData.get('title');
         const body = formData.get('body');
         const truncate = formData.get('truncate');
+        const deletePost = formData.get('deletePost');
+        const postId = formData.get('postId');
 
-        if (truncate) {
+        if (deletePost) {
+            await db.none('DELETE FROM posts WHERE id=$1', postId);
+            return NextResponse.json({ msg: `Post with id ${postId} deleted.` });
+        } else if (truncate) {
             await db.none('TRUNCATE TABLE posts RESTART IDENTITY');
             return NextResponse.json({ msg: "Table cleared." });
         } else {
